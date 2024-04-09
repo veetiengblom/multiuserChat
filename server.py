@@ -41,12 +41,14 @@ def join_channel(client, channel_name, nickname):
 
 # Function to send a message to a channel
 def send_to_channel(client, channel_name, message):
-    if channel_name is None:
-        client.send(('Join channel to send messages /join *channel name*').encode('utf-8'))
-        return 
-    for client in channels[channel_name]:
-        print('client', client)
-        client.send(message.encode('utf-8'))
+    try:
+        if channel_name is None:
+            client.send(('Join channel to send messages /join *channel name*').encode('utf-8'))
+            return 
+        for client in channels[channel_name]:
+            client.send(message.encode('utf-8'))
+    except OSError as e:
+        print(f"Error sending message to channel: {e}")
     return 
 
 
@@ -90,9 +92,7 @@ def handler(client):
                 client.close()
                 break
         except Exception as e:
-            nicknames.remove((nickname, client))
-            print(nicknames)
-            send_to_channel(client, find_channel(client), f'{nickname} left channel')
+            print('Error:', e)
             break
 
         # Check for special commands
