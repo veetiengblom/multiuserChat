@@ -1,3 +1,4 @@
+#Used help from this tutorial: https://www.youtube.com/watch?v=nmzzeAvQHp8&ab_channel=BekBrace
 # Import necessary libraries
 import socket  # For socket communication
 import threading  # For concurrent execution of tasks
@@ -56,7 +57,7 @@ def receive_messages():
             # Receive messages from the server
             message = client_socket.recv(1024).decode('utf-8')
             # Check if the server requests user identification
-            if message == 'USER':
+            if message == 'alias':
                 client_socket.send(nickname.encode('utf-8'))
             else:
                 print(message)

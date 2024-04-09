@@ -1,3 +1,4 @@
+#Used help from this tutorial: https://www.youtube.com/watch?v=nmzzeAvQHp8&ab_channel=BekBrace
 # Import necessary libraries
 import socket  # For socket communication
 import threading  # For concurrent execution of tasks
@@ -124,10 +125,9 @@ def main():
     while True:
         client, address = server_socket.accept()
         print(f'{str(address)} connected')
-        client.send('USER'.encode('utf-8'))
+        client.send('alias'.encode('utf-8'))
         nickname = client.recv(1024).decode('utf-8')
         nicknames.append((nickname, client))
-        print(client)
         clients.append(client)
         client.send('Connected to server'.encode('utf-8'))
         # Start a new thread to handle client messages
