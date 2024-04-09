@@ -5,14 +5,6 @@ import threading  # For concurrent execution of tasks
 HOST = '127.0.0.1'
 PORT = 3001
 
-# Create a socket object for server-client communication
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Bind the socket to the host and port
-server_socket.bind((HOST, PORT))
-
-server_socket.listen()
-
 clients = [] 
 nicknames = []  
 channels = {} 
@@ -119,7 +111,16 @@ def handler(client):
 
 
 # Function to accept incoming connections
-def receive():
+def main():
+    # Create a socket object for server-client communication
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Bind the socket to the host and port
+    server_socket.bind((HOST, PORT))
+
+    server_socket.listen()
+
+    
     while True:
         client, address = server_socket.accept()
         print(f'{str(address)} connected')
@@ -132,6 +133,6 @@ def receive():
         # Start a new thread to handle client messages
         threading.Thread(target=handler, args=(client,)).start()
 
-
 print(f'Server running at: {HOST}:{PORT}')
-receive()
+if __name__ == '__main__':
+    main()
